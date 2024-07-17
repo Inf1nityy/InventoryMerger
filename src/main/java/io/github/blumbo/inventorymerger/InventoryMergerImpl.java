@@ -39,7 +39,7 @@ public class InventoryMergerImpl {
             while (it.hasNext()) {
                 ItemBulk itemBulk = it.next();
                 ItemStack stackToAdd = itemBulk.itemStack;
-                if (!ItemStack.canCombine(layoutStack, stackToAdd)) continue;
+                if (!ItemStack.areItemsAndComponentsEqual(layoutStack, stackToAdd)) continue;
 
                 int count;
                 if (safeMerge) count = Math.min(itemBulk.itemStack.getMaxCount(), itemBulk.getCount());
@@ -109,7 +109,7 @@ public class InventoryMergerImpl {
 
             if (addToExistingStack) {
                 if (invStack.isEmpty()) continue;
-                if (!ItemStack.canCombine(bulkStack, invStack)) continue;
+                if (!ItemStack.areItemsAndComponentsEqual(bulkStack, invStack)) continue;
 
                 count = Math.min(bulkStack.getCount(), bulkStack.getMaxCount() - invStack.getCount());
                 invStack.increment(count);
@@ -138,7 +138,7 @@ public class InventoryMergerImpl {
 
             boolean matchFound = false;
             for (ItemBulk itemBulk : bulkList) {
-                if (!ItemStack.canCombine(arrayStack, itemBulk.itemStack)) continue;
+                if (!ItemStack.areItemsAndComponentsEqual(arrayStack, itemBulk.itemStack)) continue;
                 matchFound = true;
                 itemBulk.addSlot(slot, arrayStack.getCount());
             }
